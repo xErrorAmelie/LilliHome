@@ -41,7 +41,7 @@ public class LilliHome extends JavaPlugin implements Listener, CommandExecutor {
 	Files.x(this);
 	PluginManager pl = Bukkit.getPluginManager();
 	pl.registerEvents(this, this);
-	this.console.sendMessage(String.valueOf(prefix) + "loaded and welcome");
+	this.console.sendMessage(String.valueOf(prefix) + "loaded and welcome!");
     }
 
     public void onDisable() {
