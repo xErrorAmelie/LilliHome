@@ -1,0 +1,8 @@
+#Available Languages: en, de
+Language: en
+#Enable default permissions for everyone
+defaultpermissions: true
+#Add a world where a player shouldn't be allowed to set a home
+blockedworlds: 
+- Example1
+- Example2
