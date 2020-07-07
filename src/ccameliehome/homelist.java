@@ -27,13 +27,14 @@ public class homelist implements CommandExecutor, Listener {
     private LilliHome plugin;
 
     private static String removeLastChar(String str, Player p) {
-
-	return str.substring(0, str.length() - 5);
+	if (str.length() >= 5) {
+	    return str.substring(0, str.length() - 5);
+	}
+	return str;
 
     }
 
     HashMap<String, Integer> homeamount = new HashMap<String, Integer>();
-    HashMap<String, Integer> homeamountnull = new HashMap<String, Integer>();
 
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 	Player p = (Player) sender;
@@ -42,56 +43,54 @@ public class homelist implements CommandExecutor, Listener {
 
 	    if (p.hasPermission("lillihome.homelist") || Files.config.getBoolean(".defaultpermissions") == true) {
 		if (sender instanceof Player) {
-		    (new BukkitRunnable() {
-			public void run() {
-			    File folder = new File("plugins/LilliHome/home/players/" + p.getUniqueId());
-			    if (folder.exists()) {
 
-				String[] fileNames = folder.list();
+		    File folder = new File("plugins/LilliHome/home/players/" + p.getUniqueId());
+		    if (folder.exists()) {
 
-				StringBuilder sb = new StringBuilder();
+			String[] fileNames = folder.list();
 
-				for (int i = 0; i < fileNames.length; i++) {
-				    if (fileNames.length == i) {
-					sb.append(fileNames[i]);
-				    }
-				    sb.append(fileNames[i]).append(ChatColor.GRAY + ", " + ChatColor.GOLD);
-				    homeamount.put(p.getName(), i+1);
-				}
+			StringBuilder sb = new StringBuilder();
 
-				String msg = sb.toString().trim().replace(".yml", "");
-				if (!(removeLastChar(msg, p).length() <= 0)) {
-				    if (Files.config.getString(".Language").contains("de")) {
-					p.sendMessage(String.valueOf(LilliHome.prefix) + Files.de
-						.getString(".homelistmessage")
+			for (int i = 0; i < fileNames.length; i++) {
+			    if (fileNames.length == i) {
+				sb.append(fileNames[i]);
+			    }
+			    sb.append(fileNames[i]).append(ChatColor.GRAY + ", " + ChatColor.GOLD);
+			    homeamount.put(p.getName(), i + 1);
+			}
+
+			String msg = sb.toString().trim().replace(".yml", "");
+			if (!(removeLastChar(msg, p).length() <= 0)) {
+			    if (Files.config.getString(".Language").contains("de")) {
+				p.sendMessage(String.valueOf(LilliHome.prefix)
+					+ Files.de.getString(".homelistmessage")
 						.replace("%amount%", "" + homeamount.get(p.getName())).replace("&", "§")
-						+ removeLastChar(msg, p));
-				    } else {
-					p.sendMessage(String.valueOf(LilliHome.prefix) + Files.en
-						.getString(".homelistmessage")
-						.replace("%amount%", "" + homeamount.get(p.getName())).replace("&", "§")
-						+ removeLastChar(msg, p));
-				    }
-				} else {
-				    if (Files.config.getString(".Language").contains("de")) {
-					p.sendMessage(String.valueOf(LilliHome.prefix)
-						+ Files.de.getString(".nohomemessage").replace("&", "§"));
-				    } else {
-					p.sendMessage(String.valueOf(LilliHome.prefix)
-						+ Files.en.getString(".nohomemessage").replace("&", "§"));
-				    }
-				}
+					+ removeLastChar(msg, p));
 			    } else {
-				if (Files.config.getString(".Language").contains("de")) {
-				    p.sendMessage(String.valueOf(LilliHome.prefix)
-					    + Files.de.getString(".nohomemessage").replace("&", "§"));
-				} else {
-				    p.sendMessage(String.valueOf(LilliHome.prefix)
-					    + Files.en.getString(".nohomemessage").replace("&", "§"));
-				}
+				p.sendMessage(String.valueOf(LilliHome.prefix)
+					+ Files.en.getString(".homelistmessage")
+						.replace("%amount%", "" + homeamount.get(p.getName())).replace("&", "§")
+					+ removeLastChar(msg, p));
+			    }
+			} else {
+			    if (Files.config.getString(".Language").contains("de")) {
+				p.sendMessage(String.valueOf(LilliHome.prefix)
+					+ Files.de.getString(".nohomemessage").replace("&", "§"));
+			    } else {
+				p.sendMessage(String.valueOf(LilliHome.prefix)
+					+ Files.en.getString(".nohomemessage").replace("&", "§"));
 			    }
 			}
-		    }).runTaskLater(this.plugin, 20L);
+		    } else {
+			if (Files.config.getString(".Language").contains("de")) {
+			    p.sendMessage(String.valueOf(LilliHome.prefix)
+				    + Files.de.getString(".nohomemessage").replace("&", "§"));
+			} else {
+			    p.sendMessage(String.valueOf(LilliHome.prefix)
+				    + Files.en.getString(".nohomemessage").replace("&", "§"));
+			}
+		    }
+
 		} else {
 		    p.sendMessage("You cannot send this command in a console!");
 		}

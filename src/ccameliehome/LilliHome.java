@@ -45,7 +45,7 @@ public class LilliHome extends JavaPlugin implements Listener, CommandExecutor {
     }
 
     public void onDisable() {
-	this.console.sendMessage(String.valueOf(prefix) + "bye bye :)");
+	this.console.sendMessage(String.valueOf(prefix) + "see you later");
     }
 
    
