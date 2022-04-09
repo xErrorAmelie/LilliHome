@@ -1,0 +1,16 @@
+name: LilliHome
+version: 1.30
+main: ccamelie.lillihome.LilliHome
+author: xErrorlie
+api-version: 1.18
+commands:
+  sethome:
+    description: set a home
+  home:
+    description: teleport back home
+  delhome:
+    description: delete a home
+  homelist:
+    description: show all homes
+  lillihome:
+    description: reload config
