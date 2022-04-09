@@ -2,7 +2,7 @@ name: LilliHome
 version: 1.30
 main: ccameliehome.LilliHome
 author: xErrorlie
-api-version: 1.16
+api-version: 1.18
 commands:
   sethome:
    description: set a home
